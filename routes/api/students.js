@@ -41,14 +41,14 @@ router.get('/:id', (req,res) => {
             }
     })
     .catch(err => 
-        res.status(404).json({noblogfound: 'No blog found with that ID'}))
+        res.status(404).json({nostudentfound: 'No student found with that ID'}))
 });
 
-
-router.post('/:id', function (req, res) {
+//delete student by id
+router.delete('/:id', (req, res)  => {
     let query = { _id: req.params.id }
 
-    student.findByIdAndDelete(query, function(err){
+    student.findByIdAndDelete(query, (err) => {
         if(err){
             console.log(err);
             res.json({msg: "failed"})
@@ -60,41 +60,12 @@ router.post('/:id', function (req, res) {
     });
 })
 
-// router.delete('/:id', (req,res) => {
-//     student.findById(req.params.id)
-//         .then(student => student.remove()
-//         .then(() => res.json({success: true}))
-//         )
-//         .catch(err => res.status(404).json({success:false}))
-// })
-
-// router.put('/:id', (req,res) => {
-//     const found = student.findByIdAndUpdate(student => student.id === parseInt(req.params.id));
-//     // Campground.findByIdAndUpdate
-//     // (req.params.id, req.body.campground,function(err, updatedCampground
-//     if(found) {
-//         const updStudent = req.body;
-//         student.forEach(student => {
-//             if(student.id === parseInt(req.params.id)) {
-//                 student.firstName = updStudent.firstName ? updStudent.firstName : student.firstName;
-//                 student.lastName = uptStudent.lastName ? updStudent.lastName : student.lastName;
-//                 student.Branch = uptStudent.Branch ? updStudent.Branch : student.Branch;
-//                 student.rollNo = uptStudent.rollNo ? updStudent.rollNo : student.rollNo;
-
-
-//                 res.json({msg: 'student updated',  student})
-//             }
-//         })
-//     }else{
-//         res.status(400).json({msg : `No student with the id of ${req.params.id}`});
-//     }
-// })
-
-router.post('/:id',  (req, res) => {
+//update student by id
+router.put('/:id',  (req, res) => {
 
     student.findById(req.params.id, (err, student) => {
         if (!student)
-            res.status(404).send("data is not found");
+            res.status(404).send("student  not found");
         else {
             student.Name = req.body.Name;
             student.Branch = req.body.Branch;
